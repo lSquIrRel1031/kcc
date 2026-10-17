@@ -125,6 +125,8 @@ class Icons:
         self.deviceRmk.addPixmap(QPixmap(":/Devices/icons/Rmk.png"), QIcon.Mode.Normal, QIcon.State.Off)
         self.deviceOther = QIcon()
         self.deviceOther.addPixmap(QPixmap(":/Devices/icons/Other.png"), QIcon.Mode.Normal, QIcon.State.Off)
+        self.deviceiReader = QIcon()
+        self.deviceiReader.addPixmap(QPixmap(":/Devices/icons/Other.png"), QIcon.Mode.Normal, QIcon.State.Off)
 
         self.MOBIFormat = QIcon()
         self.MOBIFormat.addPixmap(QPixmap(":/Formats/icons/MOBI.png"), QIcon.Mode.Normal, QIcon.State.Off)
@@ -1656,6 +1658,16 @@ class KCCGUI(QObject, KCC_ui.Ui_mainWindow):
                              'Label': 'RmkPP'},
             "reMarkable Paper Pro Move": {'PVOptions': False, 'ForceExpert': False, 'DefaultFormat': 4, 'DefaultUpscale': True, 'ForceColor': True,
                              'Label': 'RmkPPMove'},
+            "iReader Light 2": {'PVOptions': False, 'ForceExpert': False, 'DefaultFormat': 1, 'DefaultUpscale': False, 'ForceColor': False,
+                                'Label': 'iRLight2'},
+            "iReader Light 4C": {'PVOptions': False, 'ForceExpert': False, 'DefaultFormat': 1, 'DefaultUpscale': False, 'ForceColor': True,
+                                'Label': 'iRLight4C'},
+            "iReader Ocean 2": {'PVOptions': False, 'ForceExpert': False, 'DefaultFormat': 1, 'DefaultUpscale': False, 'ForceColor': False,
+                                'Label': 'iROcean2'},
+            "iReader Smart Air/Xs": {'PVOptions': False, 'ForceExpert': False, 'DefaultFormat': 1, 'DefaultUpscale': False, 'ForceColor': False,
+                                'Label': 'iRSmartAir'},
+            "iReader Smart": {'PVOptions': False, 'ForceExpert': False, 'DefaultFormat': 1, 'DefaultUpscale': False, 'ForceColor': False,
+                                'Label': 'iRSmart'},
             "Other": {'PVOptions': False, 'ForceExpert': True, 'DefaultFormat': 2, 'DefaultUpscale': False, 'ForceColor': False,
                       'Label': 'OTHER'},
         }
@@ -1683,6 +1695,12 @@ class KCCGUI(QObject, KCC_ui.Ui_mainWindow):
             "reMarkable Paper Pro Move",
             "reMarkable Paper Pro",
             "reMarkable 1/2/Pure",
+            "Separator",
+            "iReader Light 4C",
+            "iReader Smart",
+            "iReader Smart Air/Xs",
+            "iReader Ocean 2",
+            "iReader Light 2",
             "Separator",
             "Other",
             *ProfileData.FIXED_RES_STRINGS,
@@ -1808,6 +1826,8 @@ class KCCGUI(QObject, KCC_ui.Ui_mainWindow):
                 GUI.deviceBox.insertSeparator(GUI.deviceBox.count() + 1)
             elif 'reM' in profile:
                 GUI.deviceBox.addItem(self.icons.deviceRmk, profile)
+            elif 'iReader' in profile:
+                GUI.deviceBox.addItem(self.icons.deviceiReader, profile)
             elif 'Ko' in profile:
                 GUI.deviceBox.addItem(self.icons.deviceKobo, profile)
             else:

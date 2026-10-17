@@ -12,7 +12,7 @@ Most manga conversion methods for ereaders add margins. But KCC enables true ful
 
 
 **Kindle Comic Converter** optimizes black & white (or color) comics and manga for E-ink ereaders 
-like Kindle, Kobo, ReMarkable, and more.
+like Kindle, Kobo, ReMarkable, iReader (掌阅), and more.
 Pages display in fullscreen without margins, 
 with proper fixed layout support.
 KCC runs on Windows, macOS, and Linux.
@@ -260,8 +260,37 @@ sudo apt-get install python3 p7zip-full python3-pil python3-psutil python3-slugi
         'Rmk2': ("reMarkable 2", (1404, 1872), Palette16, 1.0),
         'RmkPP': ("reMarkable Paper Pro", (1620, 2160), Palette16, 1.0),
         'RmkPPMove': ("reMarkable Paper Pro Move", (954, 1696), Palette16, 1.0),
+        'iRLight2': ("iReader Light 2", (758, 1024), Palette16, 1.0),
+        'iRLight4C': ("iReader Light 4C", (1072, 1448), Palette16, 1.0),
+        'iROcean2': ("iReader Ocean 2", (1264, 1680), Palette16, 1.0),
+        'iRSmartAir': ("iReader Smart Air/Xs", (1440, 1920), Palette16, 1.0),
+        'iRSmart': ("iReader Smart", (1404, 1872), Palette16, 1.0),
         'OTHER': ("Other", (0, 0), Palette16, 1.0),
 ```
+
+#### iReader (掌阅) support
+
+KCC ships profiles for 掌阅 iReader e-ink devices. They output plain **EPUB** (not KEPUB),
+which iReader reads natively:
+
+| Profile     | Device                | Resolution (W×H) | Screen            |
+|-------------|-----------------------|------------------|-------------------|
+| `iRLight2`  | iReader Light 2       | 758×1024         | 6"                |
+| `iRLight4C` | iReader Light 4C      | 1072×1448        | 6" (color)        |
+| `iROcean2`  | iReader Ocean 2       | 1264×1680        | 7"                |
+| `iRSmartAir`| iReader Smart Air/Xs  | 1440×1920        | 8"                |
+| `iRSmart`   | iReader Smart         | 1404×1872        | 10.3"             |
+
+`iRLight4C` uses a Kaleido 3 color panel. In the GUI its profile auto-enables color output;
+on the CLI pass `--forcecolor` to keep colors instead of converting to grayscale.
+
+**Fullscreen on iReader:** iReader books are written with fixed-layout and zero-margin metadata
+(`fixed-layout`, `book-type=comic`, `original-resolution`, `zero-margin`, `zero-gutter`,
+`orientation-lock`) so 掌阅 renders them as a full-screen comic rather than a reflowable book with
+page margins. If a page still shows thin left/right bands, that is aspect-ratio letterboxing (the
+source is narrower than the screen) rather than a reader margin — use `--wallpaper` (crop to fill)
+or `--stretch` (distort) on the CLI. Note the GUI's "Wallpaper mode" forces "Folder of images"
+output, so keep using the CLI options when you want an EPUB.
 
 ### Standalone `kcc-c2e.py` usage:
 
@@ -275,7 +304,8 @@ MAIN:
   -p PROFILE, --profile PROFILE
                         Device profile (Available options: K1, K2, KDX, K34, K57, KPW, KV, KPW34, K810, KO, K11, KPW5, KPW6, KS1860, KS1920,
                         KS1240, KS1324, KS, KCS, KS3, KSCS, KoMT, KoG, KoGHD, KoA, KoAHD, KoAH2O, KoAO, KoN, KoC, KoCC, KoL, KoLC, KoF, KoS, KoE,
-                        Rmk1, Rmk2, RmkPP, RmkPPMove, OTHER, 1072x1448, 1264x1680, 1404x1872, 1536x2048, 1650x2200, 1860x2480, 2400x3200)
+                        Rmk1, Rmk2, RmkPP, RmkPPMove, OTHER, 1072x1448, 1264x1680, 1404x1872, 1536x2048, 1650x2200, 1860x2480, 2400x3200,
+                        iRLight2, iRLight4C, iROcean2, iRSmartAir, iRSmart)
                         [Default=KV]
   -m, --manga-style     Manga style (right-to-left reading and splitting)
   --lightnovel          Only resize images and preserve original file structure.

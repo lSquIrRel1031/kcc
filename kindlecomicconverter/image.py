@@ -160,10 +160,21 @@ class ProfileData:
         w, h = res
         ProfilesFixed[s] = (s, res, Palette16, 1.0)
 
+    # iReader (掌阅) e-ink readers. Resolutions in portrait orientation (width, height),
+    # grayscale 16-level Carta/Kaleido panels -> Palette16, no forced color.
+    ProfilesIReader = {
+        'iRLight2': ("iReader Light 2", (758, 1024), Palette16, 1.0),
+        'iRLight4C': ("iReader Light 4C", (1072, 1448), Palette16, 1.0),
+        'iROcean2': ("iReader Ocean 2", (1264, 1680), Palette16, 1.0),
+        'iRSmartAir': ("iReader Smart Air/Xs", (1440, 1920), Palette16, 1.0),
+        'iRSmart': ("iReader Smart", (1404, 1872), Palette16, 1.0),
+    }
+
     Profiles = {
         **ProfilesKindle,
         **ProfilesKobo,
         **ProfilesRemarkable,
+        **ProfilesIReader,
         'OTHER': ("Other", (0, 0), Palette16, 1.0),
         **ProfilesFixed
     }

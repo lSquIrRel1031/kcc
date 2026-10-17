@@ -370,6 +370,18 @@ def buildOPF(dstdir, title, filelist, originalpath, cover=None):
             f.writelines(["<meta name=\"region-mag\" content=\"false\"/>\n"])
         else:
             f.writelines(["<meta name=\"region-mag\" content=\"true\"/>\n"])
+    elif options.isiReader:
+        # iReader (掌阅) e-readers only display fullscreen when the book declares itself
+        # as a fixed-layout comic without margins. Same tags as the Kindle block above,
+        # minus the Amazon-only ke-* / region-mag entries.
+        f.writelines(["<meta name=\"fixed-layout\" content=\"true\"/>\n",
+                      "<meta name=\"original-resolution\" content=\"",
+                      str(deviceres[0]) + "x" + str(deviceres[1]) + "\"/>\n",
+                      "<meta name=\"book-type\" content=\"comic\"/>\n",
+                      "<meta name=\"primary-writing-mode\" content=\"" + writingmode + "\"/>\n",
+                      "<meta name=\"zero-gutter\" content=\"true\"/>\n",
+                      "<meta name=\"zero-margin\" content=\"true\"/>\n",
+                      "<meta name=\"orientation-lock\" content=\"none\"/>\n"])
     f.writelines([
         "<meta property=\"rendition:spread\">landscape</meta>\n",
         "<meta property=\"rendition:layout\">pre-paginated</meta>\n"
@@ -1623,6 +1635,7 @@ def makeParser():
 def checkOptions(options):
     options.panelview = True
     options.iskindle = False
+    options.isiReader = False
     options.isKobo = False
     options.bordersColor = None
     options.keep_epub = False
@@ -1704,6 +1717,11 @@ def checkOptions(options):
     if 'Ko' in options.profile:
         options.panelview = False
         options.hq = False
+    # Disable all Kindle/Kobo specific features for iReader devices
+    if options.profile in image.ProfileData.ProfilesIReader.keys():
+        options.panelview = False
+        options.hq = False
+        options.isiReader = True
     # KFX output create EPUB that might be can be by jhowell KFX Output Calibre plugin
     if options.format == 'KFX':
         options.targetsize = 195
