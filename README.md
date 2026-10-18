@@ -1,3 +1,6 @@
+This project is an adaptation that adds support  for iReader
+
+
 Most manga conversion methods for ereaders add margins. But KCC enables true fullscreen from top to bottom. 
 
 ![header](images/header_marginsXO.jpeg)
